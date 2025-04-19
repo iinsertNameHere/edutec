@@ -1,0 +1,6 @@
+sanic
+Jinja2
+uvicorn
+markdown
+aiofiles
+sanic-ext

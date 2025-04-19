@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Upload Post - EduTec</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=The+Nautigal:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    .logo {
+      font-family: "The Nautigal", cursive;
+      font-size: 6rem;
+      font-weight: 900;
+    }
+    textarea {
+      resize: vertical;
+    }
+  </style>
+</head>
+<body>
+  <div class="container my-5">
+    <div class="text-center mb-4">
+      <div class="logo">edutec</div>
+      <p class="text-muted">Upload a new technical post</p>
+    </div>
+
+    <form method="POST" action="/auth" enctype="multipart/form-data">
+      <!-- Author Information -->
+      <div class="card mb-4 shadow-sm">
+        <div class="card-header bg-primary text-white">Author Information</div>
+        <div class="card-body">
+          <div class="mb-3">
+            <label class="form-label">Author Key</label>
+            <input type="password" class="form-control" name="author_key" required />
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Author Name</label>
+            <input type="text" class="form-control" name="author" required />
+          </div>
+        </div>
+      </div>
+
+      <!-- Post Details -->
+      <div class="card mb-4 shadow-sm">
+        <div class="card-header bg-success text-white">Post Details</div>
+        <div class="card-body">
+          <div class="mb-3">
+            <label class="form-label">Post Icon</label>
+            <select class="form-select" name="icon">
+              <option value="🐍">🐍</option>
+              <option value="📘">📘</option>
+              <option value="💻">💻</option>
+              <option value="🔋">🔋</option>
+              <option value="🎛">🎛</option>
+              <option value="📼">📼</option>
+              <option value="💡">💡</option>
+              <option value="🔌">🔌</option>
+              <option value="🖨">🖨</option>
+              <option value="📷">📷</option>
+              <option value="📱">📱</option>
+              <option value="🔒">🔒</option>
+              <option value="🐦">🐦</option>
+              <option value="🍇">🍇</option>
+              <option value="🎱">🎱</option>
+              <option value="🎸">🎸</option>
+              <option value="🕹">🕹</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Title</label>
+            <input type="text" class="form-control" name="title" required />
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Summary</label>
+            <input type="text" class="form-control" name="summary" required />
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Topics (comma separated)</label>
+            <input type="text" class="form-control" name="topics" required />
+          </div>
+          <input style="display: none;" id="date_input" type="text" class="form-control" name="date" value="" required/>
+        </div>
+      </div>
+
+      <!-- Media Uploads -->
+      <div class="card mb-4 shadow-sm">
+        <div class="card-header bg-info text-white">Media Uploads</div>
+        <div class="card-body">
+          <div class="mb-3">
+            <label class="form-label">Video File</label>
+            <input type="file" class="form-control" name="video_file" accept="video/*" required/>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Video Description</label>
+            <input type="text" class="form-control" name="video_description" required/>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Image File</label>
+            <input type="file" class="form-control" name="image_file" accept="image/*" required/>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Image Description</label>
+            <input type="text" class="form-control" name="image_description" required/>
+          </div>
+        </div>
+      </div>
+
+      <!-- Content -->
+      <div class="card mb-4 shadow-sm">
+        <div class="card-header bg-secondary text-white">Post Content</div>
+        <div class="card-body">
+          <div class="mb-3">
+            <label class="form-label">Post Content (Markdown format)</label>
+            <textarea class="form-control" name="content" rows="5" required></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- Code Example -->
+      <div class="card mb-4 shadow-sm">
+        <div class="card-header bg-warning text-dark">Code Example</div>
+        <div class="card-body">
+          <div class="mb-3">
+            <label class="form-label">Code Example</label>
+            <textarea class="form-control" name="code_example" rows="5"></textarea>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Code Language</label>
+            <select class="form-select" name="code_language">
+              <option value="python">Python</option>
+              <option value="cpp">C++</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Submit -->
+      <div class="text-end">
+        <button class="btn btn-primary">Submit Post</button>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    window.addEventListener("load", () => {
+      document.getElementById("date_input").value = (new Date()).toString().split(' ').splice(1,3).join(' ');
+    });
+  </script>
+</body>
+</html>
