@@ -117,8 +117,9 @@ async def index(request):
             "author": row["author"],
             "icon": row["icon"]
         }
-        for row in rPosts[2:]
+        for row in rPosts
     ]
+
     all_posts = [
         {
             "id": row["id"],
@@ -129,7 +130,7 @@ async def index(request):
             "author": row["author"],
             "icon": row["icon"]
         }
-        for row in aPosts
+        for row in (aPosts[2:] if len(aPosts) > 3 else aPosts) 
     ]
 
     template = env.get_template("index.html")
