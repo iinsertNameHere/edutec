@@ -201,7 +201,9 @@ async def post_view(request, post_id):
         return text("Post not found", status=404)
 
     template = env.get_template("post.html")
-    return html(template.render(post=post, topics=post["topics"].split(",")))
+    lang = post["code_language"]
+    if post["code_language"] == "cpp": lang = "clike"
+    return html(template.render(post=post, lang=lang, topics=post["topics"].split(",")))
 
 @app.route("/upload", methods=["GET"])
 async def upload_page(request):

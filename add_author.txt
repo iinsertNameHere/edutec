@@ -1,0 +1,1 @@
+curl -X POST http://localhost:8000/create_author   -H "Content-Type: application/x-www-form-urlencoded"   -d "secret_key={key}&author_name={name}"

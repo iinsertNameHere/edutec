@@ -60,7 +60,7 @@
       {% if posts %}
       <div class="row row-cols-1 row-cols-md-3 g-4">
         {% for post in posts %}
-        <div onclick="window.location.href='/post/0'" class="col">
+        <div onclick="window.location.href='/post/{{ post.id }}'" class="col">
           <div class="card h-100">
             <div class="card-body">
               <div class="d-flex align-items-center mb-2">
