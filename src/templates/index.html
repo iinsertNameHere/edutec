@@ -153,11 +153,8 @@
     }
 
     loadMore.addEventListener('click', loadNextPosts);
+    window.addEventListener('load', loadNextPosts);
 
-    // Initial load
-    loadNextPosts();
-  </script>
-  <script>
     const searchBox = document.getElementById('searchBox');
     const highlightedTags = document.getElementById('highlightedTags');
 
