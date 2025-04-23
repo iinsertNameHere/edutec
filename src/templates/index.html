@@ -136,7 +136,7 @@
       const text = searchBox.value;
       const tags = text.match(/#([^\s]+)/g) || [];
       const authors = text.match(/@\w+/g) || [];
-      const cleanedText = text.replace(/[#@]\w+/g, '').trim();
+      const cleanedText = text.replace(/[#@][^\s]+/g, '').trim();
 
       const queryObj = {
         text: cleanedText,
