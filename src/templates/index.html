@@ -113,7 +113,7 @@
 
     searchBox.addEventListener('input', () => {
       const text = searchBox.value;
-      const tags = text.match(/#\w+/g) || [];
+      const tags = text.match(/#([^\s]+)/g) || [];
       const authors = text.match(/@\w+/g) || [];
       highlightedTags.innerHTML = '';
 
@@ -134,7 +134,7 @@
 
     document.getElementById('searchBtn').addEventListener('click', () => {
       const text = searchBox.value;
-      const tags = text.match(/#\w+/g) || [];
+      const tags = text.match(/#([^\s]+)/g) || [];
       const authors = text.match(/@\w+/g) || [];
       const cleanedText = text.replace(/[#@]\w+/g, '').trim();
 
