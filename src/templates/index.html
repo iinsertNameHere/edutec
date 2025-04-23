@@ -67,7 +67,7 @@
     <div id="recentUploads">
         <h4>Recent Uploads</h4>
         <div class="row row-cols-1 row-cols-md-3 g-4">
-          {% for post in posts %}
+          {% for post in recent_posts %}
           <div onclick="window.location.href='/post/{{ post.id }}'" class="col">
             <div class="card h-100">
               <div class="card-body">
@@ -85,76 +85,29 @@
           </div>
           {% endfor %}
     </div> 
-
-    <div id="allPosts" class="mt-5">
-      <h4>All Posts</h4>
-      <div class="row row-cols-1 row-cols-md-3 g-4" id="allPostsContainer"></div>
-      <div class="text-center mt-3">
-        <span id="loadMore" class="text-muted" style="cursor: pointer;">Load more</span>
-      </div>
-    </div>
-
-  <script>
-    let currentPostId = 1;
-    let loading = false;
-    const postsPerPage = 10;
-    const allPostsContainer = document.getElementById('allPostsContainer');
-    const loadMore = document.getElementById('loadMore');
-
-    async function fetchPost(id) {
-      try {
-        const response = await fetch(`/post/${id}`);
-        const text = await response.text();
-        if (text.includes("Post not found")) return null;
-
-        // Assuming the post response contains JSON embedded somehow
-        const data = JSON.parse(text);
-        return data;
-      } catch (e) {
-        return null;
-      }
-    }
-
-    async function loadNextPosts() {
-      if (loading) return;
-      loading = true;
-
-      let loaded = 0;
-      while (loaded < postsPerPage) {
-        const post = await fetchPost(currentPostId);
-        if (!post) {
-          loadMore.style.display = "none";
-          break;
-        }
-
-        const col = document.createElement('div');
-        col.className = 'col';
-        col.innerHTML = `
-          <div onclick="window.location.href='/post/${post.id}'" class="card h-100">
+    <div id="allUploads" class="mt-3">
+      <h4>All Uploads</h4>
+      <div class="row row-cols-1 row-cols-md-3 g-4">
+        {% for post in all_posts %}
+        <div onclick="window.location.href='/post/{{ post.id }}'" class="col">
+          <div class="card h-100">
             <div class="card-body">
               <div class="d-flex align-items-center mb-2">
-                <span class="card-icon me-2">${post.icon || "📄"}</span>
-                <h5 class="card-title mb-0">${post.title}</h5>
+                <span class="card-icon me-2">{{ post.icon }}</span>
+                <h5 class="card-title mb-0">{{ post.title }}</h5>
               </div>
-              <p class="card-text">${post.summary}</p>
+              <p class="card-text">{{ post.summary }}</p>
             </div>
             <div class="card-footer">
-              <small class="text-muted">${post.date} by ${post.author}</small><br>
-              <span class="topic-label">${post.topic}</span>
+              <small class="text-muted">{{ post.date }} by {{ post.author }}</small><br>
+              <span class="topic-label">{{ post.topic }}</span>
             </div>
           </div>
-        `;
-        allPostsContainer.appendChild(col);
-        currentPostId++;
-        loaded++;
-      }
+        </div>
+        {% endfor %}
+  </div>
 
-      loading = false;
-    }
-
-    loadMore.addEventListener('click', loadNextPosts);
-    window.addEventListener('load', loadNextPosts);
-
+  <script>
     const searchBox = document.getElementById('searchBox');
     const highlightedTags = document.getElementById('highlightedTags');
 

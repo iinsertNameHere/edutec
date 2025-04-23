@@ -95,7 +95,15 @@ async def index(request):
         ORDER BY posts.id DESC
         LIMIT 3
     """)
-    posts = cursor.fetchall()
+    rPosts = cursor.fetchall()
+
+    cursor.execute("""
+        SELECT posts.id, posts.title, posts.icon, posts.content, posts.date, posts.topics, posts.summary, authors.name as author
+        FROM posts
+        JOIN authors ON posts.author_id = authors.id
+        ORDER BY posts.id DESC
+    """)
+    aPosts = cursor.fetchall()
     conn.close()
 
     # Format posts as dicts
@@ -109,11 +117,23 @@ async def index(request):
             "author": row["author"],
             "icon": row["icon"]
         }
-        for row in posts
+        for row in rPosts[2:]
+    ]
+    all_posts = [
+        {
+            "id": row["id"],
+            "title": row["title"],
+            "summary": row["summary"],
+            "date": row["date"],
+            "topic": row["topics"].split(",")[0] if row["topics"] else "",
+            "author": row["author"],
+            "icon": row["icon"]
+        }
+        for row in aPosts
     ]
 
     template = env.get_template("index.html")
-    return html(template.render(posts=recent_posts))
+    return html(template.render(recent_posts=recent_posts, all_posts=all_posts))
 
 
 @app.route("/search")
